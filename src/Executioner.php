@@ -122,21 +122,47 @@ class Executioner
     }
 
     /**
+     * Retrieves the compiled exec command.
+     * @return string
+     */
+    public function getCommand()
+    {
+        return $this->compileCommand();
+    }
+
+    /**
+     * Generates the command to execute
+     * @return string
+     */
+    private function compileCommand()
+    {
+        $command = '';
+        
+        if ($this->sudo) {
+            $command = 'sudo ';
+        }
+
+        $command .= escapeshellcmd($this->application_path) . $this->generateArguments();
+
+        if ($this->stderr) {
+            $command .= ' 2>&1';
+        }
+
+        return $command;
+    }
+
+    /**
      * Executes the process.
+     * @param boolean simulate
      * @return array
      * @throws Exceptions\ExecutionException
      */
     private function exceuteProcess()
     {
-        $command = '';
-        if ($this->sudo) {
-            $command = 'sudo ';
-        }
-        $command .= escapeshellcmd($this->application_path) . $this->generateArguments();
-        if ($this->stderr) {
-            $command .= ' 2>&1';
-        }
-        exec($this->application_path . $this->generateArguments(), $result, $status);
+        $command = $this->compileCommand();
+
+        exec( $command, $result, $status);
+
         if ($status > 0) {
             throw new Exceptions\ExecutionException('Unknown error occured when attempting to execute: ' . $command . PHP_EOL);
         }
