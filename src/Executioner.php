@@ -72,7 +72,7 @@ class Executioner
      */
     public function addArgument($argument)
     {
-        $this->application_arguments->push($argument);
+        $this->application_arguments->push( escapeshellarg( $argument ) );
         return $this;
     }
 
@@ -137,7 +137,7 @@ class Executioner
     private function compileCommand()
     {
         $command = '';
-        
+
         if ($this->sudo) {
             $command = 'sudo ';
         }
