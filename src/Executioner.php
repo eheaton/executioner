@@ -144,7 +144,7 @@ class Executioner
 
         $command .= escapeshellcmd($this->application_path) . $this->generateArguments();
 
-        if ($this->stderr) {
+        if ($this->stderror) {
             $command .= ' 2>&1';
         }
 
