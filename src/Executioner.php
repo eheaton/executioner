@@ -164,7 +164,7 @@ class Executioner
         exec( $command, $result, $status);
 
         if ($status > 0) {
-            throw new Exceptions\ExecutionException('Unknown error occured when attempting to execute: ' . $command . PHP_EOL);
+            throw new Exceptions\ExecutionException('Unknown error occured when attempting to execute: ' . $command . ' (status: '.$status.')'. PHP_EOL);
         }
         return $result;
     }
