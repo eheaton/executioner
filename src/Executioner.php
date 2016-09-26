@@ -47,7 +47,7 @@ class Executioner
      * Redirect stderr to stdout?
      * @var boolean
      */
-    private $stderr = false;
+    private $stderror = false;
 
     public function __construct()
     {
